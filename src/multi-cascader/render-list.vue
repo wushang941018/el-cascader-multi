@@ -96,6 +96,9 @@ export default {
       this.$emit('handle-click', node, levelIndex, level)
     },
     handleClick (node, levelIndex, level) {
+      if (!node.childNodes.length) {
+          return this.handleCheck(!node.checked, node);
+      }
       if (this.expandTrigger === 'click') {
         this.$emit('handle-click', node, levelIndex, level)
       }
