@@ -14,6 +14,7 @@
           @change="handleCheck($event, node)"
           v-model="node.checked"
           :disabled="node.disabled"
+          :indeterminate="checkStatus(node)"
           ></el-checkbox>
         </span>
         <span style="margin-left:5px">{{node[labelKey]}}</span>
@@ -106,6 +107,14 @@ export default {
     handleCheck (v, node) {
       node.checked = v
       this.$emit('handle-check', node)
+    },
+    checkStatus(node) {
+        let childNodes = node.childNodes;
+        let len = childNodes.length;
+        if (!len) return false;
+        let checkedLen = childNodes.filter(node => node.checked).length;
+        if (checkedLen && checkedLen < len) return true;
+        return false;
     },
     guid () {
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
